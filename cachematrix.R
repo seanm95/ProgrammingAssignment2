@@ -13,14 +13,14 @@
 ##     myc <- makeCacheMatrix( matrix(1:4, 2, 2))
 ## 
 makeCacheMatrix <- function(x = matrix()) {
-    m <- NULL
+    s <- NULL
     set <- function(y) {
         x <<- y
-        m <<- NULL
+        s <<- NULL
     }
     get <- function() x
-    setInverse <- function(solve) m <<- solve
-    getInverse <- function() m
+    setInverse <- function(solve) s <<- solve
+    getInverse <- function() s
     list(set = set, get = get,
          setInverse = setInverse,
          getInverse = getInverse)
@@ -32,15 +32,15 @@ makeCacheMatrix <- function(x = matrix()) {
 ## Use as follows:
 ##     cacheSolve(myc)
 ##
-cacheSolve <- function(x, ...) {
+cacheSolve <- function(x) {
         ## Return a matrix that is the inverse of 'x'
-    m <- x$getInverse()
-    if(!is.null(m)) {
+    s <- x$getInverse()
+    if(!is.null(s)) {
         message("getting cached data")
-        return(m)
+        return(s)
     }
     data <- x$get()
-    m <- solve(data, ...)
-    x$setInverse(m)
-    m
+    s <- solve(data)
+    x$setInverse(s)
+    s
 }
